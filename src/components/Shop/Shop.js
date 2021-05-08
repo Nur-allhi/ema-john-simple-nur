@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import fakeData from "../../fakeData";
 import {
   addToDatabaseCart,
@@ -54,7 +57,13 @@ const Shop = () => {
         ))}
       </div>
       <div className="cart-container">
-        <Cart cart={cart}></Cart>
+        <Cart cart={cart}>
+          <Link to="/review">
+            <button className="add-cart-btn">
+              <FontAwesomeIcon icon={faShoppingCart} /> Reveiw Order
+            </button>
+          </Link>
+        </Cart>
       </div>
     </div>
   );
