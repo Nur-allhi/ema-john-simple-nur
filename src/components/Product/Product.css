@@ -9,7 +9,9 @@
   color: rgb(22, 19, 221);
   font-weight: 600;
 }
-
+.detailsPartOfProduct {
+  margin-left: 1rem;
+}
 .add-cart-btn {
   background-color: lightsalmon;
   width: 150px;
