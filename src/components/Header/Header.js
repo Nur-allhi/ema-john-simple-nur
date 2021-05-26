@@ -13,7 +13,9 @@ const Header = () => {
         <Link to="/shop">Shop</Link>
         <Link to="/review">Review</Link>
         <Link to="/inventory">Manage-Inventory</Link>
-        <button onClick={() => setLogedInUser({})}>Sign Out</button>
+        <button className="sign-out-Btn" onClick={() => setLogedInUser({})}>
+          Sign Out
+        </button>
       </nav>
     </div>
   );
