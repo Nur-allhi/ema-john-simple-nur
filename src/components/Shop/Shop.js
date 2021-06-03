@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link, Router } from "react-router-dom";
-import fakeData from "../../fakeData";
+
 import {
   addToDatabaseCart,
   getDatabaseCart,
@@ -12,20 +12,28 @@ import Product from "../Product/Product";
 import "./Shop.css";
 
 const Shop = () => {
-  const first10 = fakeData.slice(0, 10);
-  const [products, setProducts] = useState(first10);
+  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
 
   useEffect(() => {
     const savedCart = getDatabaseCart();
     const productKeys = Object.keys(savedCart);
-    const previousCart = productKeys.map((existingKey) => {
-      const product = fakeData.find((pd) => pd.key === existingKey);
-      product.quantity = savedCart[existingKey];
-      return product;
-    });
-    setCart(previousCart);
-  }, []);
+    console.log(products, productKeys);
+    if (products.length) {
+      const previousCart = productKeys.map((existingKey) => {
+        const product = products.find((pd) => pd.key === existingKey);
+        product.quantity = savedCart[existingKey];
+        return product;
+      });
+      setCart(previousCart);
+    }
+  }, [products]);
 
   const handleAddProduct = (product) => {
     const toBeAddedKey = product.key;

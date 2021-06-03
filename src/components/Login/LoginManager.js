@@ -1,7 +1,8 @@
+import "firebase/auth";
 import firebase from "firebase/app";
 import firebaseConfig from "./Firebase.Config";
 
-export const initializeLoginFramework = () => {
+export const initializeAppLoginFrameWork = () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   } else {
@@ -9,11 +10,9 @@ export const initializeLoginFramework = () => {
   }
 };
 
-// Google Sign in & Normal Sign in:
-export const handleGoogleSignIn = () => {
-  // providers For external Sign in method:
+// Google sign in:
+export const handleGoogleSignin = () => {
   const googleProvider = new firebase.auth.GoogleAuthProvider();
-
   return firebase
     .auth()
     .signInWithPopup(googleProvider)
@@ -21,10 +20,10 @@ export const handleGoogleSignIn = () => {
       const { displayName, email, photoURL } = result.user;
       const signedInUser = {
         isSignedIn: true,
+        success: true,
         name: displayName,
         email: email,
         photo: photoURL,
-        success: true,
       };
       return signedInUser;
     })
@@ -33,60 +32,25 @@ export const handleGoogleSignIn = () => {
     });
 };
 
-// Facebook Sign In :
+// Facebook sign in:
 export const handleFbSignIn = () => {
-  // providers For external Sign in method:
   const fbProvider = new firebase.auth.FacebookAuthProvider();
-
   return firebase
     .auth()
     .signInWithPopup(fbProvider)
     .then((result) => {
+      console.log(result);
       /** @type {firebase.auth.OAuthCredential} */
-      var credential = result.credential;
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      var accessToken = credential.accessToken;
-      console.log(accessToken);
-      // The signed-in user info.
+      // var credential = result.credential;
       var user = result.user;
       user.success = true;
       return user;
-
-      // ...
     })
     .catch((error) => {
       console.log(error);
-      // // Handle Errors here.
-      // var errorCode = error.code;
-      // var errorMessage = error.message;
-      // // The email of the user's account used.
-      // var email = error.email;
-      // // The firebase.auth.AuthCredential type that was used.
-      // var credential = error.credential;
-
-      // // ...
     });
 };
 
-// Sign Out Function:
-export const handleSignOut = () => {
-  return firebase
-    .auth()
-    .signOut()
-    .then((res) => {
-      const signOutUser = {
-        isSignedIn: false,
-        name: "",
-        email: "",
-        photo: "",
-        error: "",
-        success: false,
-      };
-      return signOutUser;
-    });
-};
-
-//New USer sign up:
 export const createUserWithEmailAndPassword = (name, email, password) => {
   return firebase
     .auth()
@@ -106,8 +70,7 @@ export const createUserWithEmailAndPassword = (name, email, password) => {
     });
 };
 
-// Sign in with old id and password:
-export const SignInWithOldIdAndPassword = (email, password) => {
+export const signInWithEmailAndPassword = (email, password) => {
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
@@ -124,8 +87,7 @@ export const SignInWithOldIdAndPassword = (email, password) => {
       return newUserInfo;
     });
 };
-
-// Update user name in the data and Ui:
+// Update user name:
 const updateUserName = (name) => {
   const user = firebase.auth().currentUser;
 
@@ -139,5 +101,23 @@ const updateUserName = (name) => {
     })
     .catch(function (error) {
       console.log(error);
+    });
+};
+
+// Sign out:
+export const handleSignOut = () => {
+  return firebase
+    .auth()
+    .signOut()
+    .then((res) => {
+      const signOutUser = {
+        isSignedIn: false,
+        name: "",
+        email: "",
+        photo: "",
+        error: "",
+        success: false,
+      };
+      return signOutUser;
     });
 };
