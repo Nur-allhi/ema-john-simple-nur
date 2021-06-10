@@ -25,10 +25,24 @@ export const handleGoogleSignin = () => {
         email: email,
         photo: photoURL,
       };
+      setUserToken();
       return signedInUser;
     })
     .catch((error) => {
       console.log(error.message);
+    });
+};
+
+// Auth token:
+const setUserToken = () => {
+  firebase
+    .auth()
+    .currentUser.getIdToken(/* forceRefresh */ true)
+    .then(function (idToken) {
+      sessionStorage.setItem("idToken", idToken);
+    })
+    .catch(function (error) {
+      // Handle error
     });
 };
 

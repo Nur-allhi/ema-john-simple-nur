@@ -19,3 +19,9 @@
 3. Orders are stored in the data base now.
 4. Cart is fetching the data from Database.
 5. Code changes here and there.
+
+### V-0.4
+
+## Feature added:
+
+1. Payment taking form added.
