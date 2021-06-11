@@ -25,3 +25,11 @@
 ## Feature added:
 
 1. Payment taking form added.
+
+### V-0.5
+
+## Feature added:
+
+1. Payment gatway successfully implemented.
+2. search option added in the shop.
+3. server edited for the search.
